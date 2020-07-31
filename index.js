@@ -49,13 +49,13 @@ const run = async () => {
     if (!netlifySites || netlifySites.length === 0) {
       core.setFailed(`Could not find Netlify site with the name ${siteName}`);
     }
-    const { site_id } = netlifySites[0];
-    core.setOutput('site_id', site_id);
+    const { site_id: siteId } = netlifySites[0];
+    core.setOutput('site_id', siteId);
 
-    const { data: netlifyDeployments } = await getNetlifyUrl(`https://api.netlify.com/api/v1/sites/${site_id}/deploys`);
+    const { data: netlifyDeployments } = await getNetlifyUrl(`https://api.netlify.com/api/v1/sites/${siteId}/deploys`);
 
     if (!netlifyDeployments) {
-      core.setFailed(`Failed to get deployments for site`);
+      core.setFailed('Failed to get deployments for site');
     }
 
     // Most likely, it's the first entry in the response
