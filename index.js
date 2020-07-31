@@ -32,14 +32,18 @@ const run = async () => {
     // not the *latest commit* of the PR which is what Netlify uses. Instead,
     // have to use github.context.payload.pull_request.head.sha
     // See: https://docs.github.com/en/developers/webhooks-and-events/webhook-events-and-payloads#pull_request
-    const commitSha = github.context.payload.pull_request.head.sha;
+    const isPr = 'pull_request' in github.context.payload;
+    const commitSha = isPr ? github.context.payload.pull_request.head.sha : github.context.sha;
     const MAX_TIMEOUT = Number(core.getInput('max_timeout')) || 60;
     const siteName = core.getInput('site_name');
     if (!netlifyToken) {
       core.setFailed('Please set NETLIFY_TOKEN env variable to your Netlify Personal Access Token secret');
     }
+
     if (!commitSha) {
       core.setFailed('Could not determine GitHub commit');
+    } else {
+      console.log('Using SHA', commitSha, isPr ? 'from PR' : '');
     }
     if (!siteName) {
       core.setFailed('Required field `site_name` was not provided');
@@ -61,7 +65,7 @@ const run = async () => {
     // Most likely, it's the first entry in the response
     // but we correlate it just to be safe
     const commitDeployment = netlifyDeployments.find(
-      (d) => d.commit_ref === commitSha && d.context === 'deploy-preview',
+      (d) => d.commit_ref === commitSha && d.context === (isPr ? 'deploy-preview' : 'production'),
     );
     if (!commitDeployment) {
       core.setFailed(`Could not find deployment for commit ${commitSha}`);
