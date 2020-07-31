@@ -47,7 +47,10 @@
     }
   },
   "lint-staged": {
-    "./*.js": "eslint --cache --fix",
+    "./*.js": [
+      "eslint --cache --fix",
+      "npm run build"
+    ],
     "*.md": "prettier --write"
   },
   "release": {

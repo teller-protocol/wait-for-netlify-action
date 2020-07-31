@@ -1,3 +1,15 @@
+# [2.0.0](https://github.com/kamranayub/wait-for-netlify-action/compare/v1.0.0...v2.0.0) (2020-07-31)
+
+
+### Bug Fixes
+
+* **package:** increment major ([74b5c7c](https://github.com/kamranayub/wait-for-netlify-action/commit/74b5c7c05fcce2bc318bb95067948fb4797c8b6b))
+
+
+### BREAKING CHANGES
+
+* **package:** force update for tagging purposes
+
 # 1.0.0 (2020-07-31)
 
 
