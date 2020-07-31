@@ -1,6 +1,7 @@
-const core = require("@actions/core");
-const github = require("@actions/github");
-const axios = require("axios");
+/* eslint-disable no-console, no-await-in-loop  */
+const core = require('@actions/core');
+const github = require('@actions/github');
+const axios = require('axios');
 
 function getNetlifyUrl(url) {
   return axios.get(url, {
@@ -12,12 +13,12 @@ function getNetlifyUrl(url) {
 
 const waitForUrl = async (url, MAX_TIMEOUT) => {
   const iterations = MAX_TIMEOUT / 3;
-  for (let i = 0; i < iterations; i++) {
+  for (let i = 0; i < iterations; i += 1) {
     try {
       await axios.get(url);
       return;
     } catch (e) {
-      console.log("Url unavailable, retrying...");
+      console.log('Url unavailable, retrying...');
       await new Promise((r) => setTimeout(r, 3000));
     }
   }
@@ -32,32 +33,26 @@ const run = async () => {
     // have to use github.context.payload.pull_request.head.sha
     // See: https://docs.github.com/en/developers/webhooks-and-events/webhook-events-and-payloads#pull_request
     const commitSha = github.context.payload.pull_request.head.sha;
-    const MAX_TIMEOUT = Number(core.getInput("max_timeout")) || 60;
-    const siteName = core.getInput("site_name");
+    const MAX_TIMEOUT = Number(core.getInput('max_timeout')) || 60;
+    const siteName = core.getInput('site_name');
     if (!netlifyToken) {
-      core.setFailed(
-        "Please set NETLIFY_TOKEN env variable to your Netlify Personal Access Token secret"
-      );
+      core.setFailed('Please set NETLIFY_TOKEN env variable to your Netlify Personal Access Token secret');
     }
     if (!commitSha) {
-      core.setFailed("Could not determine GitHub commit");
+      core.setFailed('Could not determine GitHub commit');
     }
     if (!siteName) {
-      core.setFailed("Required field `site_name` was not provided");
+      core.setFailed('Required field `site_name` was not provided');
     }
 
-    const { data: netlifySites } = await getNetlifyUrl(
-      `https://api.netlify.com/api/v1/sites?name=${siteName}`
-    );
+    const { data: netlifySites } = await getNetlifyUrl(`https://api.netlify.com/api/v1/sites?name=${siteName}`);
     if (!netlifySites || netlifySites.length === 0) {
       core.setFailed(`Could not find Netlify site with the name ${siteName}`);
     }
     const { site_id } = netlifySites[0];
-    core.setOutput("site_id", site_id);
+    core.setOutput('site_id', site_id);
 
-    const { data: netlifyDeployments } = await getNetlifyUrl(
-      `https://api.netlify.com/api/v1/sites/${site_id}/deploys`
-    );
+    const { data: netlifyDeployments } = await getNetlifyUrl(`https://api.netlify.com/api/v1/sites/${site_id}/deploys`);
 
     if (!netlifyDeployments) {
       core.setFailed(`Failed to get deployments for site`);
@@ -66,12 +61,12 @@ const run = async () => {
     // Most likely, it's the first entry in the response
     // but we correlate it just to be safe
     const commitDeployment = netlifyDeployments.find(
-      (d) => d.commit_ref === commitSha && d.context === "deploy-preview"
+      (d) => d.commit_ref === commitSha && d.context === 'deploy-preview',
     );
     if (!commitDeployment) {
       core.setFailed(`Could not find deployment for commit ${commitSha}`);
     }
-    core.setOutput("deploy_id", commitDeployment.id);
+    core.setOutput('deploy_id', commitDeployment.id);
 
     // At this point, we have enough info to where
     // we could wait for the deployment state === "ready"
@@ -81,7 +76,7 @@ const run = async () => {
     // This could be enhanced to wait for the deployment status
     // and then wait once again for the URL to return 200.
     const url = `https://${commitDeployment.id}--${siteName}.netlify.app`;
-    core.setOutput("url", url);
+    core.setOutput('url', url);
     console.log(`Waiting for a 200 from: ${url}`);
     await waitForUrl(url, MAX_TIMEOUT);
   } catch (error) {
