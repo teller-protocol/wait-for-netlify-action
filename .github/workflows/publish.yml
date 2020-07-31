@@ -18,7 +18,7 @@ jobs:
       - run: yarn
       - run: yarn lint
 
-  build-and-publish-npm:
+  build-and-publish:
     needs: lint-and-test
     runs-on: ubuntu-latest
     steps:
@@ -32,10 +32,6 @@ jobs:
 
       - run: yarn
       - run: yarn build
-
-      - name: Semantic Release
-        uses: cycjimmy/semantic-release-action@v2
-        with:
-          branch: master
+      - run: yarn semantic-release
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_TOKEN: ${{secrets.GH_TOKEN}}
