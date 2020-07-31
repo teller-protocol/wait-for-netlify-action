@@ -1,3 +1,10 @@
+## [2.0.2](https://github.com/kamranayub/wait-for-netlify-action/compare/v2.0.1...v2.0.2) (2020-07-31)
+
+
+### Bug Fixes
+
+* **package:** typos and path ([4d21387](https://github.com/kamranayub/wait-for-netlify-action/commit/4d213878739b2b970f2d67b128a332411aa508b3))
+
 ## [2.0.1](https://github.com/kamranayub/wait-for-netlify-action/compare/v2.0.0...v2.0.1) (2020-07-31)
 
 
