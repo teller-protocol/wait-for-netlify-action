@@ -43,7 +43,7 @@ const run = async () => {
     if (!commitSha) {
       core.setFailed('Could not determine GitHub commit');
     } else {
-      console.log('Using SHA', commitSha, isPr ? ' from PR' : '');
+      console.log('Using SHA', commitSha, isPr ? 'from PR' : '');
     }
     if (!siteName) {
       core.setFailed('Required field `site_name` was not provided');
