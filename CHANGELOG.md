@@ -1,3 +1,12 @@
+## [2.0.3](https://github.com/kamranayub/wait-for-netlify-action/compare/v2.0.2...v2.0.3) (2020-07-31)
+
+
+### Bug Fixes
+
+* should work with master or production branches now ([324e205](https://github.com/kamranayub/wait-for-netlify-action/commit/324e205bbe6802718a113dccf55ef3a556b967e7))
+* **package:** typos and path ([8d57496](https://github.com/kamranayub/wait-for-netlify-action/commit/8d57496916c8b82099bff81062f1fe4f1ee160d1))
+* should work on non-pr builds ([8f01806](https://github.com/kamranayub/wait-for-netlify-action/commit/8f018069ef245071a8a91c7722365020c9576ec8))
+
 ## [2.0.2](https://github.com/kamranayub/wait-for-netlify-action/compare/v2.0.1...v2.0.2) (2020-07-31)
 
 
