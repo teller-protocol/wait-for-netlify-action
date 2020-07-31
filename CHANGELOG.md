@@ -1,0 +1,26 @@
+# 1.0.0 (2020-07-31)
+
+
+### Bug Fixes
+
+* async/await all the things ([17c79ad](https://github.com/kamranayub/wait-for-netlify-action/commit/17c79ad645470ec3b7e3227a8bb6ce7fc005e14d))
+* check-in node_modules ([0f7e84d](https://github.com/kamranayub/wait-for-netlify-action/commit/0f7e84d74c9d4346904ef37138426a7f5d8ec88c))
+* commit node_modules ([6ba8bb0](https://github.com/kamranayub/wait-for-netlify-action/commit/6ba8bb03164465254043207015218519359ad088))
+* max_timeout, github sha ([4f68c63](https://github.com/kamranayub/wait-for-netlify-action/commit/4f68c63fc14e989b504b6b3bc4635f276b3767d0))
+* move to async function ([4fb77dd](https://github.com/kamranayub/wait-for-netlify-action/commit/4fb77dd38734cf7567c10ec9ed3768ab31e2d148))
+* params to axios.get ([cd0bdf8](https://github.com/kamranayub/wait-for-netlify-action/commit/cd0bdf80eb7de68410cc00681781c733f2d8206a))
+* pass netlify token to auth header ([9c03295](https://github.com/kamranayub/wait-for-netlify-action/commit/9c03295155a77476b56550255cbeafabba3d222a))
+* updating the "uses" path ([f16b004](https://github.com/kamranayub/wait-for-netlify-action/commit/f16b004f304dd3dbe6a83ff81f5fe47a91a389f4))
+
+
+### Features
+
+* adding complete example ([7bee90c](https://github.com/kamranayub/wait-for-netlify-action/commit/7bee90c1b2cdf840ea7b59845992af5be171e6e5))
+* adding error handling ([2fbf1a3](https://github.com/kamranayub/wait-for-netlify-action/commit/2fbf1a3050c92c8e6c5e15a3fc0459ebdeeaa9fe))
+* adding example action ([9265032](https://github.com/kamranayub/wait-for-netlify-action/commit/9265032bccf41044d1992e514959e7156670e001))
+* adding output. updating action yaml ([c09179c](https://github.com/kamranayub/wait-for-netlify-action/commit/c09179c52e7d2a9429da180b9b38ecf06db47065))
+* basic logic to wait for a 200 response ([771ad34](https://github.com/kamranayub/wait-for-netlify-action/commit/771ad349cac19486730ee3f3337ca6640ddcb30a))
+* configure hello world action ([dc1ad01](https://github.com/kamranayub/wait-for-netlify-action/commit/dc1ad01b9085dd61303746fd6c2eb42d660fb578))
+* configure local workflow ([#1](https://github.com/kamranayub/wait-for-netlify-action/issues/1)) ([2d43cf2](https://github.com/kamranayub/wait-for-netlify-action/commit/2d43cf2d348037c32c3c336f216959c9b866ef4e))
+* should timeout for 404 url ([1ed1b71](https://github.com/kamranayub/wait-for-netlify-action/commit/1ed1b711aabb3d8a2c933175f29f47a45a2b7ed1))
+* use Netlify API ([80aff93](https://github.com/kamranayub/wait-for-netlify-action/commit/80aff936c285354a0dadc2ea4326141bc01474e1))
