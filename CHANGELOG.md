@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/kamranayub/wait-for-netlify-action/compare/v2.0.0...v2.0.1) (2020-07-31)
+
+
+### Bug Fixes
+
+* **package:** always build on pre-commit ([1fec6dd](https://github.com/kamranayub/wait-for-netlify-action/commit/1fec6dd7db4396975eb2929e7a6777bcf67288a9))
+
 # [2.0.0](https://github.com/kamranayub/wait-for-netlify-action/compare/v1.0.0...v2.0.0) (2020-07-31)
 
 
