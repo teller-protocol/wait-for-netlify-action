@@ -15,4 +15,4 @@ outputs:
     description: "The fully qualified deploy preview URL"
 runs:
   using: "node12"
-  main: "dist/gindex.js"
+  main: "dist/index.js"

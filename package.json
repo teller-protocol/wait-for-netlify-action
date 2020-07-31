@@ -3,7 +3,7 @@
   "version": "0.0.0-development",
   "private": true,
   "description": "A GitHub action that waits for a Netlify deployment preview for the current commit being built",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "ncc build -o dist index.js",
     "lint": "eslint --cache --fix index.js",
