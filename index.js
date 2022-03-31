@@ -64,9 +64,7 @@ const run = async () => {
 
     // Most likely, it's the first entry in the response
     // but we correlate it just to be safe
-    const commitDeployment = netlifyDeployments.find(
-      (d) => d.commit_ref === commitSha && d.context === (isPr ? 'deploy-preview' : 'production'),
-    );
+    const commitDeployment = netlifyDeployments.find((d) => d.commit_ref === commitSha);
     if (!commitDeployment) {
       core.setFailed(`Could not find deployment for commit ${commitSha}`);
     }
