@@ -7,10 +7,9 @@ inputs:
   site_name:
     description: "The Netlify site name to test against"
     required: true
-  max_timeout:
-    description: "The max time to run the action"
-    required: false
 outputs:
+  deploy_id:
+    description: "The ID of the deployment"
   url:
     description: "The fully qualified deploy preview URL"
 runs:

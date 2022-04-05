@@ -1817,20 +1817,6 @@ function getNetlifyUrl(url) {
   });
 }
 
-const waitForUrl = async (url, MAX_TIMEOUT) => {
-  const iterations = MAX_TIMEOUT / 3;
-  for (let i = 0; i < iterations; i += 1) {
-    try {
-      await axios.get(url);
-      return;
-    } catch (e) {
-      console.log('Url unavailable, retrying...');
-      await new Promise((r) => setTimeout(r, 3000));
-    }
-  }
-  core.setFailed(`Timeout reached: Unable to connect to ${url}`);
-};
-
 const run = async () => {
   try {
     const netlifyToken = process.env.NETLIFY_TOKEN;
@@ -1840,7 +1826,6 @@ const run = async () => {
     // See: https://docs.github.com/en/developers/webhooks-and-events/webhook-events-and-payloads#pull_request
     const isPr = 'pull_request' in github.context.payload;
     const commitSha = isPr ? github.context.payload.pull_request.head.sha : github.context.sha;
-    const MAX_TIMEOUT = Number(core.getInput('max_timeout')) || 60;
     const siteName = core.getInput('site_name');
     if (!netlifyToken) {
       core.setFailed('Please set NETLIFY_TOKEN env variable to your Netlify Personal Access Token secret');
@@ -1874,19 +1859,22 @@ const run = async () => {
     if (!commitDeployment) {
       core.setFailed(`Could not find deployment for commit ${commitSha}`);
     }
-    core.setOutput('deploy_id', commitDeployment.id);
 
-    // At this point, we have enough info to where
-    // we could wait for the deployment state === "ready"
-    // but it's probably more reliable to wait for the URL
-    // to be available.
-    //
-    // This could be enhanced to wait for the deployment status
-    // and then wait once again for the URL to return 200.
-    const url = `https://${commitDeployment.id}--${siteName}.netlify.app`;
-    core.setOutput('url', url);
-    console.log(`Waiting for a 200 from: ${url}`);
-    await waitForUrl(url, MAX_TIMEOUT);
+    let commitBuild;
+    while (!commitBuild || !commitBuild.done) {
+      await new Promise((r) => setTimeout(r, 3000));
+      const { data } = await getNetlifyUrl(`https://api.netlify.com/api/v1/builds/${commitDeployment.build_id}`);
+      commitBuild = data;
+    }
+
+    console.log('Build done');
+
+    if (commitBuild.error !== null && typeof commitBuild.error === 'string') {
+      core.setFailed(commitBuild.error);
+    }
+
+    core.setOutput('deploy_id', commitDeployment.id);
+    core.setOutput('url', commitDeployment.links.permalink);
   } catch (error) {
     core.setFailed(error.message);
   }
