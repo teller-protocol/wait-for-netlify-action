@@ -63,8 +63,8 @@ const run = async () => {
 
     console.log('Build done');
 
-    if (commitBuild.error !== null && typeof commitBuild.error === 'string') {
-      core.setFailed(commitBuild.error);
+    if (commitBuild.state === 'error' && typeof commitBuild.error_message === 'string') {
+      core.setFailed(commitBuild.error_message);
     }
 
     core.setOutput('deploy_id', commitDeployment.id);
