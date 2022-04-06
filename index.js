@@ -63,7 +63,7 @@ const run = async () => {
 
     console.log('Build done');
 
-    if (commitBuild.state === 'error' && typeof commitBuild.error_message === 'string') {
+    if (commitDeployment.state === 'error' && typeof commitDeployment.error_message === 'string') {
       core.setFailed(commitBuild.error_message);
     }
 
