@@ -1869,10 +1869,19 @@ const run = async () => {
 
     console.log('Build done');
 
+    let skipped = commitDeployment.skipped === true;
     if (commitDeployment.state === 'error' && typeof commitDeployment.error_message === 'string') {
-      core.setFailed(commitBuild.error_message);
+      skipped = /Canceled build due to no content change/i.test(commitDeployment.error_message);
+      if (!skipped) {
+        core.setFailed(commitBuild.error_message);
+      }
     }
 
+    if (skipped) {
+      core.notice('The deployment was skipped due to no content changes');
+    }
+
+    core.setOutput('skipped', skipped);
     core.setOutput('deploy_id', commitDeployment.id);
     core.setOutput('url', commitDeployment.links.permalink);
   } catch (error) {

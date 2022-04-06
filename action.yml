@@ -12,6 +12,8 @@ outputs:
     description: "The ID of the deployment"
   url:
     description: "The fully qualified deploy preview URL"
+  skipped:
+    description: "Boolean indicating if the deployment was skipped"
 runs:
   using: "node12"
   main: "dist/index.js"
